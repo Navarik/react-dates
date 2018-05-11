@@ -6,7 +6,7 @@ export default function getResponsiveContainerStyles(
   containerEdge,
   margin,
 ) {
-  const windowWidth = typeof window !== 'undefined' ? window.innerWidth : 0;
+  const windowWidth = typeof document !== 'undefined' && document.body !== 'undefined' ? document.body.clientWidth : 0;
   const calculatedOffset = anchorDirection === ANCHOR_LEFT
     ? windowWidth - containerEdge
     : containerEdge;
