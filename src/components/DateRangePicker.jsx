@@ -270,10 +270,6 @@ class DateRangePicker extends React.Component {
   }
 
   responsivizePickerPosition() {
-    // It's possible the portal props have been changed in response to window resizes
-    // So let's ensure we reset this back to the base state each time
-    this.setState({ dayPickerContainerStyles: {} });
-
     if (!this.isOpened()) {
       return;
     }
