@@ -486,9 +486,11 @@ class DateRangePicker extends React.Component {
     const {
       startDate,
       startDateId,
+      startDateName,
       startDatePlaceholderText,
       endDate,
       endDateId,
+      endDateName,
       endDatePlaceholderText,
       focusedInput,
       screenReaderInputMessage,
@@ -539,10 +541,12 @@ class DateRangePicker extends React.Component {
           <DateRangePickerInputController
             startDate={startDate}
             startDateId={startDateId}
+            startDateName={startDateName}
             startDatePlaceholderText={startDatePlaceholderText}
             isStartDateFocused={focusedInput === START_DATE}
             endDate={endDate}
             endDateId={endDateId}
+            endDateName={endDateName}
             endDatePlaceholderText={endDatePlaceholderText}
             isEndDateFocused={focusedInput === END_DATE}
             displayFormat={displayFormat}

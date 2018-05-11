@@ -22,6 +22,7 @@ export default {
 
   // input related props
   id: PropTypes.string.isRequired,
+  name: PropTypes.string,
   placeholder: PropTypes.string,
   disabled: PropTypes.bool,
   required: PropTypes.bool,
