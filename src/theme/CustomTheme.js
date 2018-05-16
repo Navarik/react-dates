@@ -155,8 +155,8 @@ export default {
       displayTextPaddingTop: 0,/* NB. influences fang height */
       displayTextPaddingBottom: 0,/* NB. influences fang height */
       displayTextPaddingHorizontal: undefined,
-      displayTextPaddingLeft: 11,
-      displayTextPaddingRight: 11,
+      displayTextPaddingLeft: 0,
+      displayTextPaddingRight: 0,
       displayTextPaddingVertical_small: undefined,
       displayTextPaddingTop_small: 7,
       displayTextPaddingBottom_small: 5,
@@ -166,7 +166,7 @@ export default {
     },
 
     sizing: {
-      inputWidth: 120,
+      inputWidth: 100,
       inputWidth_small: 97,
       arrowWidth: 24,
     },
@@ -175,7 +175,7 @@ export default {
       size: 14,
       captionSize: 18,
       input: {
-        size: 19,
+        size: 11,
         lineHeight: '9px', /* NB. influences fang height */
         size_small: 15,
         lineHeight_small: '18px',

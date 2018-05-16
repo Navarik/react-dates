@@ -596,7 +596,7 @@
   background: #fff;
   position: relative;
   display: inline-block;
-  width: 120px;
+  width: 100px;
   vertical-align: middle
 }
 .DateInput__small {
@@ -611,12 +611,12 @@
 }
 .DateInput_input {
   font-weight: 200;
-  font-size: 19px;
+  font-size: 11px;
   line-height: 9px;
   color: #484848;
   background-color: #fff;
   width: 100%;
-  padding: 0 11px;
+  padding: 0;
   border: 0;
   border-top: 0;
   border-right: 0;
