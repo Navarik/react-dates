@@ -383,13 +383,14 @@ class DateRangePicker extends React.Component {
       disabled,
       theme: { reactDates },
     } = this.props;
+    const focusedDate = this.props[focusedInput];
     const { dayPickerContainerStyles, isDayPickerFocused, showKeyboardShortcuts } = this.state;
 
     const onOutsideClick = (!withFullScreenPortal && withPortal)
       ? this.onOutsideClick
       : undefined;
     const initialVisibleMonthThunk = initialVisibleMonth || (
-      () => (startDate || endDate || moment())
+      () => (focusedDate || startDate || endDate || moment())
     );
 
     const closeIcon = customCloseIcon || (
