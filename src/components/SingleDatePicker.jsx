@@ -48,6 +48,7 @@ const defaultProps = {
 
   // input related props
   id: 'date',
+  name: null,
   placeholder: 'Date',
   disabled: false,
   required: false,
@@ -303,10 +304,6 @@ class SingleDatePicker extends React.Component {
 
   /* istanbul ignore next */
   responsivizePickerPosition() {
-    // It's possible the portal props have been changed in response to window resizes
-    // So let's ensure we reset this back to the base state each time
-    this.setState({ dayPickerContainerStyles: {} });
-
     const {
       openDirection,
       anchorDirection,
@@ -515,6 +512,7 @@ class SingleDatePicker extends React.Component {
   render() {
     const {
       id,
+      name,
       placeholder,
       disabled,
       focused,
@@ -559,6 +557,7 @@ class SingleDatePicker extends React.Component {
         <OutsideClickHandler onOutsideClick={onOutsideClick}>
           <SingleDatePickerInput
             id={id}
+            name={name}
             placeholder={placeholder}
             focused={focused}
             isFocused={isInputFocused}

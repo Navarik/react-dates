@@ -1,7 +1,7 @@
 import ThemedStyleSheet from 'react-with-styles/lib/ThemedStyleSheet';
-import DefaultTheme from '../theme/DefaultTheme';
+import CustomTheme from '../theme/CustomTheme';
 
 export default function registerInterfaceWithDefaultTheme(reactWithStylesInterface) {
   ThemedStyleSheet.registerInterface(reactWithStylesInterface);
-  ThemedStyleSheet.registerTheme(DefaultTheme);
+  ThemedStyleSheet.registerTheme(CustomTheme);
 }

@@ -24,6 +24,7 @@ const FANG_STROKE_BOTTOM = `M0,0 ${FANG_WIDTH_PX / 2},${FANG_HEIGHT_PX} ${FANG_W
 const propTypes = forbidExtraProps({
   ...withStylesPropTypes,
   id: PropTypes.string.isRequired,
+  name: PropTypes.string,
   placeholder: PropTypes.string, // also used as label
   displayValue: PropTypes.string,
   screenReaderMessage: PropTypes.string,
@@ -51,6 +52,7 @@ const propTypes = forbidExtraProps({
 });
 
 const defaultProps = {
+  name: null,
   placeholder: 'Select Date',
   displayValue: '',
   screenReaderMessage: '',
@@ -170,6 +172,7 @@ class DateInput extends React.Component {
     } = this.state;
     const {
       id,
+      name,
       placeholder,
       displayValue,
       screenReaderMessage,
@@ -219,7 +222,7 @@ class DateInput extends React.Component {
           aria-label={placeholder}
           type="text"
           id={id}
-          name={id}
+          name={name || id}
           ref={this.setInputRef}
           value={value}
           onChange={this.onChange}
