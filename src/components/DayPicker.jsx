@@ -45,6 +45,8 @@ const MONTH_PADDING = 23;
 const DAY_PICKER_PADDING = 9;
 const PREV_TRANSITION = 'prev';
 const NEXT_TRANSITION = 'next';
+const PREV_YEAR_TRANSITION = 'prev-year';
+const NEXT_YEAR_TRANSITION = 'next-year';
 
 const propTypes = forbidExtraProps({
   ...withStylesPropTypes,
@@ -74,6 +76,8 @@ const propTypes = forbidExtraProps({
   onPrevMonthClick: PropTypes.func,
   onNextMonthClick: PropTypes.func,
   onMultiplyScrollableMonths: PropTypes.func, // VERTICAL_SCROLLABLE daypickers only
+  onPrevYearClick: PropTypes.func,
+  onNextYearClick: PropTypes.func,
 
   // month props
   renderMonth: PropTypes.func,
@@ -125,6 +129,8 @@ export const defaultProps = {
   onPrevMonthClick() {},
   onNextMonthClick() {},
   onMultiplyScrollableMonths() {},
+  onPrevYearClick() {},
+  onNextYearClick() {},
 
   // month props
   renderMonth: null,
@@ -190,6 +196,8 @@ class DayPicker extends React.Component {
     this.throttledKeyDown = throttle(this.onFinalKeyDown, 200, { trailing: false });
     this.onPrevMonthClick = this.onPrevMonthClick.bind(this);
     this.onNextMonthClick = this.onNextMonthClick.bind(this);
+    this.onPrevYearClick = this.onPrevYearClick.bind(this);
+    this.onNextYearClick = this.onNextYearClick.bind(this);
     this.multiplyScrollableMonths = this.multiplyScrollableMonths.bind(this);
     this.updateStateAfterMonthTransition = this.updateStateAfterMonthTransition.bind(this);
 
@@ -445,17 +453,73 @@ class DayPicker extends React.Component {
     });
   }
 
+  onPrevYearClick(nextFocusedDate, e) {
+    const { numberOfMonths, isRTL } = this.props;
+    const { calendarMonthWidth } = this.state;
+
+    if (e) e.preventDefault();
+
+    let translationValue = this.isVertical() ? this.calendarMonthHeights[0] : calendarMonthWidth;
+
+    if (this.isHorizontal()) {
+      if (isRTL) {
+        translationValue = -2 * calendarMonthWidth;
+      }
+      const newMonthHeight = Math.max(0, ...this.calendarMonthHeights.slice(0, numberOfMonths));
+      this.adjustDayPickerHeight(newMonthHeight);
+    }
+
+    translationValue *= 12; // TODO: relate to nummonths
+
+    this.setState({
+      monthTransition: PREV_YEAR_TRANSITION,
+      translationValue,
+      focusedDate: null,
+      nextFocusedDate,
+    });
+  }
+
+  onNextYearClick(nextFocusedDate, e) {
+    const { isRTL } = this.props;
+    const { calendarMonthWidth } = this.state;
+
+    if (e) e.preventDefault();
+
+    let translationValue = this.isVertical() ? -this.calendarMonthHeights[1] : -calendarMonthWidth;
+
+    if (this.isHorizontal()) {
+      if (isRTL) {
+        translationValue = 0;
+      }
+      const newMonthHeight = Math.max(0, ...this.calendarMonthHeights.slice(2));
+      this.adjustDayPickerHeight(newMonthHeight);
+    }
+
+    translationValue *= 12;
+
+    this.setState({
+      monthTransition: NEXT_YEAR_TRANSITION,
+      translationValue,
+      focusedDate: null,
+      nextFocusedDate,
+    });
+  }
+
   getFirstVisibleIndex() {
     const { orientation } = this.props;
     const { monthTransition } = this.state;
 
     if (orientation === VERTICAL_SCROLLABLE) return 0;
 
-    let firstVisibleMonthIndex = 1;
+    let firstVisibleMonthIndex = 12;
     if (monthTransition === PREV_TRANSITION) {
       firstVisibleMonthIndex -= 1;
     } else if (monthTransition === NEXT_TRANSITION) {
       firstVisibleMonthIndex += 1;
+    } else if (monthTransition === PREV_YEAR_TRANSITION) {
+      firstVisibleMonthIndex -= 12;
+    } else if (monthTransition === NEXT_YEAR_TRANSITION) {
+      firstVisibleMonthIndex += 12;
     }
 
     return firstVisibleMonthIndex;
@@ -555,6 +619,8 @@ class DayPicker extends React.Component {
     const {
       onPrevMonthClick,
       onNextMonthClick,
+      onPrevYearClick,
+      onNextYearClick,
       isRTL,
     } = this.props;
 
@@ -576,6 +642,12 @@ class DayPicker extends React.Component {
     } else if (monthTransition === NEXT_TRANSITION) {
       if (onNextMonthClick) onNextMonthClick();
       newMonth.add(1, 'month');
+    } else if (monthTransition === PREV_YEAR_TRANSITION) {
+      if (onPrevYearClick) onPrevYearClick();
+      newMonth.subtract(1, 'year');
+    } else if (monthTransition === NEXT_YEAR_TRANSITION) {
+      if (onNextYearClick) onNextYearClick();
+      newMonth.add(1, 'year');
     }
 
     let newFocusedDate = null;
@@ -918,6 +990,8 @@ class DayPicker extends React.Component {
                   dayAriaLabelFormat={dayAriaLabelFormat}
                   transitionDuration={transitionDuration}
                   verticalBorderSpacing={verticalBorderSpacing}
+                  onPrevYearClick={(e) => { this.onPrevYearClick(null, e); }}
+                  onNextYearClick={(e) => { this.onNextYearClick(null, e); }}
                 />
                 {verticalScrollable && this.renderNavigation()}
               </div>

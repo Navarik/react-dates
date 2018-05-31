@@ -94,6 +94,8 @@ const defaultProps = {
 
   onPrevMonthClick() {},
   onNextMonthClick() {},
+  onPrevYearClick() {},
+  onNextYearClick() {},
   onClose() {},
 
   // month presentation and interaction related props
@@ -393,6 +395,8 @@ class SingleDatePicker extends React.Component {
       navNext,
       onPrevMonthClick,
       onNextMonthClick,
+      onPrevYearClick,
+      onNextYearClick,
       onClose,
       withPortal,
       withFullScreenPortal,
@@ -471,6 +475,8 @@ class SingleDatePicker extends React.Component {
           navNext={navNext}
           onPrevMonthClick={onPrevMonthClick}
           onNextMonthClick={onNextMonthClick}
+          onPrevYearClick={onPrevYearClick}
+          onNextYearClick={onNextYearClick}
           onClose={onClose}
           renderMonth={renderMonth}
           renderCalendarDay={renderCalendarDay}

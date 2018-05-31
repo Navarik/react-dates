@@ -53,6 +53,8 @@ const propTypes = forbidExtraProps({
   isRTL: PropTypes.bool,
   transitionDuration: nonNegativeInteger,
   verticalBorderSpacing: nonNegativeInteger,
+  onPrevYearClick: PropTypes.func,
+  onNextYearClick: PropTypes.func,
 
   // i18n
   monthFormat: PropTypes.string,
@@ -84,6 +86,8 @@ const defaultProps = {
   isRTL: false,
   transitionDuration: 200,
   verticalBorderSpacing: undefined,
+  onPrevYearClick() {},
+  onNextYearClick() {},
 
   // i18n
   monthFormat: 'MMMM YYYY', // english locale
@@ -91,12 +95,17 @@ const defaultProps = {
   dayAriaLabelFormat: undefined,
 };
 
+const extraMonthsToLoad = 24;
+
 function getMonths(initialMonth, numberOfMonths, withoutTransitionMonths) {
   let month = initialMonth.clone();
-  if (!withoutTransitionMonths) month = month.subtract(1, 'month');
+  if (!withoutTransitionMonths) month = month.subtract(1, 'year');
 
   const months = [];
-  for (let i = 0; i < (withoutTransitionMonths ? numberOfMonths : numberOfMonths + 2); i += 1) {
+  let totalNumMonths = numberOfMonths;
+  if (!withoutTransitionMonths) totalNumMonths += extraMonthsToLoad;
+
+  for (let i = 0; i < totalNumMonths; i += 1) {
     months.push(month);
     month = month.clone().add(1, 'month');
   }
@@ -142,17 +151,7 @@ class CalendarMonthGrid extends React.Component {
     const hasNumberOfMonthsChanged = this.props.numberOfMonths !== numberOfMonths;
     let newMonths = months;
 
-    if (hasMonthChanged && !hasNumberOfMonthsChanged) {
-      if (isAfterDay(initialMonth, this.props.initialMonth)) {
-        newMonths = months.slice(1);
-        newMonths.push(months[months.length - 1].clone().add(1, 'month'));
-      } else {
-        newMonths = months.slice(0, months.length - 1);
-        newMonths.unshift(months[0].clone().subtract(1, 'month'));
-      }
-    }
-
-    if (hasNumberOfMonthsChanged) {
+    if (hasMonthChanged || hasNumberOfMonthsChanged) {
       const withoutTransitionMonths = orientation === VERTICAL_SCROLLABLE;
       newMonths = getMonths(initialMonth, numberOfMonths, withoutTransitionMonths);
     }
@@ -249,6 +248,8 @@ class CalendarMonthGrid extends React.Component {
       dayAriaLabelFormat,
       transitionDuration,
       verticalBorderSpacing,
+      onPrevYearClick,
+      onNextYearClick,
     } = this.props;
 
     const { months } = this.state;
@@ -260,7 +261,7 @@ class CalendarMonthGrid extends React.Component {
 
     const width = isVertical || isVerticalScrollable ?
       calendarMonthWidth :
-      (numberOfMonths + 2) * calendarMonthWidth;
+      (numberOfMonths + extraMonthsToLoad) * calendarMonthWidth;
 
     return (
       <div
@@ -283,9 +284,9 @@ class CalendarMonthGrid extends React.Component {
       >
         {months.map((month, i) => {
           const isVisible = (i >= firstVisibleMonthIndex)
-            && (i < firstVisibleMonthIndex + numberOfMonths);
-          const hideForAnimation = i === 0 && !isVisible;
-          const showForAnimation = i === 0 && isAnimating && isVisible;
+            && (i < 12 + numberOfMonths);
+          const hideForAnimation = i < 12 && !isVisible;
+          const showForAnimation = i < 12 && isAnimating && isVisible;
           const monthString = toISOMonthString(month);
           return (
             <div
@@ -295,7 +296,7 @@ class CalendarMonthGrid extends React.Component {
                 hideForAnimation && styles.CalendarMonthGrid_month__hideForAnimation,
                 showForAnimation && !isVertical && !isRTL && {
                   position: 'absolute',
-                  left: -calendarMonthWidth,
+                  left: -calendarMonthWidth * (12 - i),
                 },
                 showForAnimation && !isVertical && isRTL && {
                   position: 'absolute',
@@ -329,6 +330,8 @@ class CalendarMonthGrid extends React.Component {
                 setMonthHeight={(height) => { this.setMonthHeight(height, i); }}
                 dayAriaLabelFormat={dayAriaLabelFormat}
                 verticalBorderSpacing={verticalBorderSpacing}
+                onPrevYearClick={onPrevYearClick}
+                onNextYearClick={onNextYearClick}
               />
             </div>
           );

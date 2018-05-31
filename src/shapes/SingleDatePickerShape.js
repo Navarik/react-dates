@@ -69,6 +69,8 @@ export default {
 
   onPrevMonthClick: PropTypes.func,
   onNextMonthClick: PropTypes.func,
+  onPrevYearClick: PropTypes.func,
+  onNextYearClick: PropTypes.func,
   onClose: PropTypes.func,
 
   // day presentation and interaction related props

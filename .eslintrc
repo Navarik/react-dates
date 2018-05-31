@@ -25,6 +25,8 @@
     "react-with-styles/no-unused-styles": 2,
 
     "no-restricted-imports": 0, // TODO: enable with full RTL support
+
+    "linebreak-style": 0
   },
 
   "settings": {

@@ -46,6 +46,8 @@ const propTypes = forbidExtraProps({
   firstDayOfWeek: DayOfWeekShape,
   setMonthHeight: PropTypes.func,
   verticalBorderSpacing: nonNegativeInteger,
+  onPrevYearClick: PropTypes.func,
+  onNextYearClick: PropTypes.func,
 
   focusedDate: momentPropTypes.momentObj, // indicates focusable day
   isFocused: PropTypes.bool, // indicates whether or not to move focus to focusable day
@@ -164,6 +166,8 @@ class CalendarMonth extends React.Component {
       phrases,
       dayAriaLabelFormat,
       verticalBorderSpacing,
+      onPrevYearClick,
+      onNextYearClick,
     } = this.props;
 
     const { weeks } = this.state;
@@ -189,6 +193,8 @@ class CalendarMonth extends React.Component {
           )}
         >
           <strong>{monthTitle}</strong>
+          <button onClick={onPrevYearClick}>-</button>
+          <button onClick={onNextYearClick}>+</button>
         </div>
 
         <table

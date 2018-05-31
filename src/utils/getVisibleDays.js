@@ -10,8 +10,8 @@ export default function getVisibleDays(
   if (!moment.isMoment(month)) return {};
 
   const visibleDaysByMonth = {};
-  let currentMonth = withoutTransitionMonths ? month.clone() : month.clone().subtract(1, 'month');
-  for (let i = 0; i < (withoutTransitionMonths ? numberOfMonths : numberOfMonths + 2); i += 1) {
+  let currentMonth = withoutTransitionMonths ? month.clone() : month.clone().subtract(12, 'month');
+  for (let i = 0; i < (withoutTransitionMonths ? numberOfMonths : numberOfMonths + 24); i += 1) {
     const visibleDays = [];
 
     // set utc offset to get correct dates in future (when timezone changes)
