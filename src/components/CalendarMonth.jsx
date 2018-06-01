@@ -320,10 +320,8 @@ export default withStyles(({ reactDates: { color, font, spacing } }) => ({
     height: 34,
     border: `1px solid ${color.core.borderLight}`,
     borderRadius: 3,
-
-    // ':hover': {
-    //   border: `1px solid ${color.core.borderMedium}`,
-    // },
+    fontSize: font.captionSize,
+    boxSizing: 'border-box',
   },
 
   CalendarMonth_month: {
