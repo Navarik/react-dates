@@ -28,6 +28,8 @@ import {
   VERTICAL_SCROLLABLE,
   DAY_SIZE,
 } from '../constants';
+import ChevronUp from './ChevronUp';
+import ChevronDown from './ChevronDown';
 
 const propTypes = forbidExtraProps({
   ...withStylesPropTypes,
@@ -180,16 +182,14 @@ class CalendarMonth extends React.Component {
       <div {...css(styles.CalendarMonth_yearNav_wrapper)}>
         <strong>{yearTitle}</strong>
         <div {...css(styles.CalendarMonth_yearNav_btnWrapper)}>
-          <button
+          <ChevronUp
             onClick={onNextYearClick}
             {...css(styles.CalendarMonth_yearNav)}
-          >+
-          </button>
-          <button
+          />
+          <ChevronDown
             onClick={onPrevYearClick}
             {...css(styles.CalendarMonth_yearNav)}
-          >-
-          </button>
+          />
         </div>
       </div>
     );
@@ -321,9 +321,9 @@ export default withStyles(({ reactDates: { color, font, spacing } }) => ({
     border: `1px solid ${color.core.borderLight}`,
     borderRadius: 3,
 
-    ':hover': {
-      border: `1px solid ${color.core.borderMedium}`,
-    },
+    // ':hover': {
+    //   border: `1px solid ${color.core.borderMedium}`,
+    // },
   },
 
   CalendarMonth_month: {
@@ -341,19 +341,24 @@ export default withStyles(({ reactDates: { color, font, spacing } }) => ({
     height: '50%',
     display: 'block',
     width: 17,
-    padding: 0,
+    padding: 3,
     fontSize: 12,
     overflow: 'hidden',
     backgroundColor: color.background,
     color: color.placeholderText,
-    border: 'none',
+    // border: 'none',
     cursor: 'pointer',
 
-    ':focus': {
+    border: `1px solid transparent`,
+    borderRadius: 3,
+
+    ':hover': {
+      border: `1px solid ${color.core.borderLight}`,
       backgroundColor: color.core.borderLight,
     },
 
-    ':hover': {
+    ':focus': {
+      backgroundColor: color.core.borderLight,
       backgroundColor: color.core.borderLight,
     },
   },
