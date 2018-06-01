@@ -638,23 +638,32 @@ export default class DayPickerRangeController extends React.Component {
   }
 
   onPrevMonthClick() {
-    const { onPrevMonthClick, numberOfMonths, enableOutsideDays } = this.props;
+    const {
+      onPrevMonthClick,
+      numberOfMonths,
+      enableOutsideDays,
+      orientation,
+    } = this.props;
     const { currentMonth, visibleDays } = this.state;
 
+    const newCurrentMonth = currentMonth.clone().subtract(1, 'month');
+    const prevMonthVisibleDays = getVisibleDays(newCurrentMonth, numberOfMonths, enableOutsideDays, orientation === VERTICAL_SCROLLABLE);
+
     const newVisibleDays = {};
-    Object.keys(visibleDays).sort().slice(0, numberOfMonths + 23).forEach((month) => {
-      newVisibleDays[month] = visibleDays[month];
+    const newPrevMonthVisibleDays = {};
+    Object.keys(prevMonthVisibleDays).forEach((testKey) => {
+      if (visibleDays[testKey]) {
+        newVisibleDays[testKey] = visibleDays[testKey];
+      } else {
+        newPrevMonthVisibleDays[testKey] = prevMonthVisibleDays[testKey];
+      }
     });
 
-    const prevMonth = currentMonth.clone().subtract(13, 'months');
-    const prevMonthVisibleDays = getVisibleDays(prevMonth, 1, enableOutsideDays, true);
-
-    const newCurrentMonth = currentMonth.clone().subtract(1, 'month');
     this.setState({
       currentMonth: newCurrentMonth,
       visibleDays: {
         ...newVisibleDays,
-        ...this.getModifiers(prevMonthVisibleDays),
+        ...this.getModifiers(newPrevMonthVisibleDays),
       },
     }, () => {
       onPrevMonthClick(newCurrentMonth.clone());
@@ -662,23 +671,32 @@ export default class DayPickerRangeController extends React.Component {
   }
 
   onNextMonthClick() {
-    const { onNextMonthClick, numberOfMonths, enableOutsideDays } = this.props;
+    const {
+      onNextMonthClick,
+      numberOfMonths,
+      enableOutsideDays,
+      orientation,
+    } = this.props;
     const { currentMonth, visibleDays } = this.state;
 
+    const newCurrentMonth = currentMonth.clone().add(1, 'month');
+    const nextMonthVisibleDays = getVisibleDays(newCurrentMonth, numberOfMonths, enableOutsideDays, orientation === VERTICAL_SCROLLABLE);
+
     const newVisibleDays = {};
-    Object.keys(visibleDays).sort().slice(1).forEach((month) => {
-      newVisibleDays[month] = visibleDays[month];
+    const newNextMonthVisibleDays = {};
+    Object.keys(nextMonthVisibleDays).forEach((testKey) => {
+      if (visibleDays[testKey]) {
+        newVisibleDays[testKey] = visibleDays[testKey];
+      } else {
+        newNextMonthVisibleDays[testKey] = nextMonthVisibleDays[testKey];
+      }
     });
 
-    const nextMonth = currentMonth.clone().add(numberOfMonths + 12, 'month');
-    const nextMonthVisibleDays = getVisibleDays(nextMonth, 1, enableOutsideDays, true);
-
-    const newCurrentMonth = currentMonth.clone().add(1, 'month');
     this.setState({
       currentMonth: newCurrentMonth,
       visibleDays: {
         ...newVisibleDays,
-        ...this.getModifiers(nextMonthVisibleDays),
+        ...this.getModifiers(newNextMonthVisibleDays),
       },
     }, () => {
       onNextMonthClick(newCurrentMonth.clone());
@@ -686,23 +704,32 @@ export default class DayPickerRangeController extends React.Component {
   }
 
   onPrevYearClick() {
-    const { onPrevYearClick, numberOfMonths, enableOutsideDays } = this.props;
+    const {
+      onPrevYearClick,
+      numberOfMonths,
+      enableOutsideDays,
+      orientation,
+    } = this.props;
     const { currentMonth, visibleDays } = this.state;
 
+    const newCurrentMonth = currentMonth.clone().subtract(12, 'months');
+    const prevMonthVisibleDays = getVisibleDays(newCurrentMonth, numberOfMonths, enableOutsideDays, orientation === VERTICAL_SCROLLABLE);
+
     const newVisibleDays = {};
-    Object.keys(visibleDays).sort().slice(0, numberOfMonths + 12).forEach((month) => {
-      newVisibleDays[month] = visibleDays[month];
+    const newPrevMonthVisibleDays = {};
+    Object.keys(prevMonthVisibleDays).forEach((testKey) => {
+      if (visibleDays[testKey]) {
+        newVisibleDays[testKey] = visibleDays[testKey];
+      } else {
+        newPrevMonthVisibleDays[testKey] = prevMonthVisibleDays[testKey];
+      }
     });
 
-    const prevMonth = currentMonth.clone().subtract(24, 'months');
-    const prevMonthVisibleDays = getVisibleDays(prevMonth, 12, enableOutsideDays, true);
-
-    const newCurrentMonth = currentMonth.clone().subtract(12, 'months');
     this.setState({
       currentMonth: newCurrentMonth,
       visibleDays: {
         ...newVisibleDays,
-        ...this.getModifiers(prevMonthVisibleDays),
+        ...this.getModifiers(newPrevMonthVisibleDays),
       },
     }, () => {
       onPrevYearClick(newCurrentMonth.clone());
@@ -710,23 +737,32 @@ export default class DayPickerRangeController extends React.Component {
   }
 
   onNextYearClick() {
-    const { onNextYearClick, numberOfMonths, enableOutsideDays } = this.props;
+    const {
+      onNextYearClick,
+      numberOfMonths,
+      enableOutsideDays,
+      orientation,
+    } = this.props;
     const { currentMonth, visibleDays } = this.state;
 
+    const newCurrentMonth = currentMonth.clone().add(12, 'months');
+    const nextMonthVisibleDays = getVisibleDays(newCurrentMonth, numberOfMonths, enableOutsideDays, orientation === VERTICAL_SCROLLABLE);
+
     const newVisibleDays = {};
-    Object.keys(visibleDays).sort().slice(12).forEach((month) => {
-      newVisibleDays[month] = visibleDays[month];
+    const newNextMonthVisibleDays = {};
+    Object.keys(nextMonthVisibleDays).forEach((testKey) => {
+      if (visibleDays[testKey]) {
+        newVisibleDays[testKey] = visibleDays[testKey];
+      } else {
+        newNextMonthVisibleDays[testKey] = nextMonthVisibleDays[testKey];
+      }
     });
 
-    const nextMonth = currentMonth.clone().add(numberOfMonths + 12, 'months');
-    const nextMonthVisibleDays = getVisibleDays(nextMonth, 12, enableOutsideDays, true);
-
-    const newCurrentMonth = currentMonth.clone().add(12, 'months');
     this.setState({
       currentMonth: newCurrentMonth,
       visibleDays: {
         ...newVisibleDays,
-        ...this.getModifiers(nextMonthVisibleDays),
+        ...this.getModifiers(newNextMonthVisibleDays),
       },
     }, () => {
       onNextYearClick(newCurrentMonth.clone());

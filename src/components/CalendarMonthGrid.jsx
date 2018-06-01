@@ -95,19 +95,34 @@ const defaultProps = {
   dayAriaLabelFormat: undefined,
 };
 
-const extraMonthsToLoad = 24;
-
 function getMonths(initialMonth, numberOfMonths, withoutTransitionMonths) {
-  let month = initialMonth.clone();
-  if (!withoutTransitionMonths) month = month.subtract(1, 'year');
-
   const months = [];
-  let totalNumMonths = numberOfMonths;
-  if (!withoutTransitionMonths) totalNumMonths += extraMonthsToLoad;
+  let month;
 
-  for (let i = 0; i < totalNumMonths; i += 1) {
+  if (!withoutTransitionMonths) {
+    // add months for prev year
+    month = initialMonth.clone().subtract(1, 'year');
+    for (let i = 0; i < numberOfMonths; i += 1) {
+      months.push(month);
+      month = month.clone().add(1, 'month');
+    }
+  }
+
+  // add visible months (and prev/next month if TransitionMonths)
+  month = initialMonth.clone();
+  if (!withoutTransitionMonths) month = month.subtract(1, 'month');
+  for (let i = 0; i < (withoutTransitionMonths ? numberOfMonths : numberOfMonths + 2); i += 1) {
     months.push(month);
     month = month.clone().add(1, 'month');
+  }
+
+  if (!withoutTransitionMonths) {
+    // add months for next year
+    month = initialMonth.clone().add(1, 'year');
+    for (let i = 0; i < numberOfMonths; i += 1) {
+      months.push(month);
+      month = month.clone().add(1, 'month');
+    }
   }
 
   return months;
@@ -261,7 +276,8 @@ class CalendarMonthGrid extends React.Component {
 
     const width = isVertical || isVerticalScrollable ?
       calendarMonthWidth :
-      (numberOfMonths + extraMonthsToLoad) * calendarMonthWidth;
+      ((numberOfMonths * 3) + 2) * calendarMonthWidth;
+    const numMonthsBeforeVisible = numberOfMonths + 1;
 
     return (
       <div
@@ -284,9 +300,9 @@ class CalendarMonthGrid extends React.Component {
       >
         {months.map((month, i) => {
           const isVisible = (i >= firstVisibleMonthIndex)
-            && (i < 12 + numberOfMonths);
-          const hideForAnimation = i < 12 && !isVisible;
-          const showForAnimation = i < 12 && isAnimating && isVisible;
+            && (i < numMonthsBeforeVisible + numberOfMonths);
+          const hideForAnimation = i < numMonthsBeforeVisible && !isVisible;
+          const showForAnimation = i < numMonthsBeforeVisible && isAnimating && isVisible;
           const monthString = toISOMonthString(month);
           return (
             <div
@@ -296,7 +312,7 @@ class CalendarMonthGrid extends React.Component {
                 hideForAnimation && styles.CalendarMonthGrid_month__hideForAnimation,
                 showForAnimation && !isVertical && !isRTL && {
                   position: 'absolute',
-                  left: -calendarMonthWidth * (12 - i),
+                  left: -calendarMonthWidth * (numMonthsBeforeVisible - i),
                 },
                 showForAnimation && !isVertical && isRTL && {
                   position: 'absolute',
