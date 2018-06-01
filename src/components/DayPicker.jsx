@@ -410,14 +410,13 @@ class DayPicker extends React.Component {
 
     if (e) e.preventDefault();
 
-    let translationValue = this.isVertical() ? this.calendarMonthHeights[0] : calendarMonthWidth;
+    let translationValue = this.isVertical() ? this.calendarMonthHeights[numberOfMonths] : calendarMonthWidth;
 
     if (this.isHorizontal()) {
       if (isRTL) {
         translationValue = -2 * calendarMonthWidth;
       }
-
-      const newMonthHeight = Math.max(0, ...this.calendarMonthHeights.slice(0, numberOfMonths));
+      const newMonthHeight = Math.max(0, ...this.calendarMonthHeights.slice(numberOfMonths, numberOfMonths * 2));
       this.adjustDayPickerHeight(newMonthHeight);
     }
 
@@ -430,18 +429,18 @@ class DayPicker extends React.Component {
   }
 
   onNextMonthClick(nextFocusedDate, e) {
-    const { isRTL } = this.props;
+    const { numberOfMonths, isRTL } = this.props;
     const { calendarMonthWidth } = this.state;
 
     if (e) e.preventDefault();
 
-    let translationValue = this.isVertical() ? -this.calendarMonthHeights[1] : -calendarMonthWidth;
+    let translationValue = this.isVertical() ? -this.calendarMonthHeights[numberOfMonths + 1] : -calendarMonthWidth;
 
     if (this.isHorizontal()) {
       if (isRTL) {
         translationValue = 0;
       }
-      const newMonthHeight = Math.max(0, ...this.calendarMonthHeights.slice(2));
+      const newMonthHeight = Math.max(0, ...this.calendarMonthHeights.slice(numberOfMonths + 2, (numberOfMonths * 2) + 2));
       this.adjustDayPickerHeight(newMonthHeight);
     }
 
@@ -491,7 +490,7 @@ class DayPicker extends React.Component {
       if (isRTL) {
         translationValue = 0;
       }
-      const newMonthHeight = Math.max(0, ...this.calendarMonthHeights.slice(2));
+      const newMonthHeight = Math.max(0, ...this.calendarMonthHeights.slice((numberOfMonths * 2) + 2));
       this.adjustDayPickerHeight(newMonthHeight);
     }
 
@@ -1082,7 +1081,7 @@ export default withStyles(({ reactDates: { color, font, zIndex } }) => ({
   DayPicker_weekHeader: {
     color: color.placeholderText,
     position: 'absolute',
-    top: 62,
+    top: 68,
     zIndex: zIndex + 2,
     padding: '0 13px',
     textAlign: 'left',

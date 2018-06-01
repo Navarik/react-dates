@@ -225,15 +225,7 @@ class CalendarMonthGrid extends React.Component {
   }
 
   setMonthHeight(height, i) {
-    if (this.calendarMonthHeights[i]) {
-      if (i === 0) {
-        this.calendarMonthHeights = [height].concat(this.calendarMonthHeights.slice(0, -1));
-      } else if (i === this.calendarMonthHeights.length - 1) {
-        this.calendarMonthHeights = this.calendarMonthHeights.slice(1).concat(height);
-      }
-    } else {
-      this.calendarMonthHeights[i] = height;
-    }
+    this.calendarMonthHeights[i] = height;
   }
 
   render() {
@@ -304,6 +296,7 @@ class CalendarMonthGrid extends React.Component {
           const hideForAnimation = i < numMonthsBeforeVisible && !isVisible;
           const showForAnimation = i < numMonthsBeforeVisible && isAnimating && isVisible;
           const monthString = toISOMonthString(month);
+          const showYearNav = i === (firstVisibleMonthIndex + Math.ceil(numberOfMonths / 2) - 1);
           return (
             <div
               key={monthString}
@@ -348,6 +341,8 @@ class CalendarMonthGrid extends React.Component {
                 verticalBorderSpacing={verticalBorderSpacing}
                 onPrevYearClick={onPrevYearClick}
                 onNextYearClick={onNextYearClick}
+                showYearNav={showYearNav}
+                monthIndex={i}
               />
             </div>
           );

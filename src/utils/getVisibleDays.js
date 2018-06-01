@@ -86,7 +86,5 @@ export default function getVisibleDays(
     }
   }
 
-  console.log('getVisibleDays', {months,skipMonths});
-
   return months;
 }

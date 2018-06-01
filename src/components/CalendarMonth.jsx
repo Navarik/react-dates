@@ -56,6 +56,9 @@ const propTypes = forbidExtraProps({
   monthFormat: PropTypes.string,
   phrases: PropTypes.shape(getPhrasePropTypes(CalendarDayPhrases)),
   dayAriaLabelFormat: PropTypes.string,
+
+  showYearNav: PropTypes.bool,
+  monthIndex: PropTypes.number,
 });
 
 const defaultProps = {
@@ -82,6 +85,9 @@ const defaultProps = {
   phrases: CalendarDayPhrases,
   dayAriaLabelFormat: undefined,
   verticalBorderSpacing: undefined,
+
+  showYearNav: false,
+  monthIndex: undefined,
 };
 
 class CalendarMonth extends React.Component {
@@ -124,6 +130,12 @@ class CalendarMonth extends React.Component {
     return shallowCompare(this, nextProps, nextState);
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.monthIndex !== this.props.monthIndex) {
+      this.setMonthHeightTimeout = setTimeout(this.setMonthHeight, 0);
+    }
+  }
+
   componentWillUnmount() {
     if (this.setMonthHeightTimeout) {
       clearTimeout(this.setMonthHeightTimeout);
@@ -146,10 +158,46 @@ class CalendarMonth extends React.Component {
     this.gridRef = ref;
   }
 
+  maybeRenderYearNav() {
+    const {
+      month,
+      styles,
+      onPrevYearClick,
+      onNextYearClick,
+      showYearNav,
+    } = this.props;
+
+    // TODO: improve this to allow custom format?
+    const yearTitle = month.format('YYYY');
+
+    if (!showYearNav) {
+      return (
+        <strong>{yearTitle}</strong>
+      );
+    }
+
+    return (
+      <div {...css(styles.CalendarMonth_yearNav_wrapper)}>
+        <strong>{yearTitle}</strong>
+        <div {...css(styles.CalendarMonth_yearNav_btnWrapper)}>
+          <button
+            onClick={onNextYearClick}
+            {...css(styles.CalendarMonth_yearNav)}
+          >+
+          </button>
+          <button
+            onClick={onPrevYearClick}
+            {...css(styles.CalendarMonth_yearNav)}
+          >-
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   render() {
     const {
       month,
-      monthFormat,
       orientation,
       isVisible,
       modifiers,
@@ -166,12 +214,11 @@ class CalendarMonth extends React.Component {
       phrases,
       dayAriaLabelFormat,
       verticalBorderSpacing,
-      onPrevYearClick,
-      onNextYearClick,
     } = this.props;
 
     const { weeks } = this.state;
-    const monthTitle = renderMonth ? renderMonth(month) : month.format(monthFormat);
+    // TODO: improve this to allow custom format?
+    const monthTitle = renderMonth ? renderMonth(month) : month.format('MMMM');
 
     const verticalScrollable = orientation === VERTICAL_SCROLLABLE;
 
@@ -192,9 +239,8 @@ class CalendarMonth extends React.Component {
             verticalScrollable && styles.CalendarMonth_caption__verticalScrollable,
           )}
         >
-          <strong>{monthTitle}</strong>
-          <button onClick={onPrevYearClick}>-</button>
-          <button onClick={onNextYearClick}>+</button>
+          <strong {...css(styles.CalendarMonth_month)}>{monthTitle}</strong>
+          {this.maybeRenderYearNav()}
         </div>
 
         <table
@@ -257,14 +303,59 @@ export default withStyles(({ reactDates: { color, font, spacing } }) => ({
     color: color.text,
     fontSize: font.captionSize,
     textAlign: 'center',
-    paddingTop: spacing.captionPaddingTop,
+    paddingTop: 18,
     paddingBottom: spacing.captionPaddingBottom,
     captionSide: 'initial',
+    lineHeight: '34px',
   },
 
   CalendarMonth_caption__verticalScrollable: {
     paddingTop: 12,
     paddingBottom: 7,
+  },
+
+  CalendarMonth_yearNav_wrapper: {
+    paddingLeft: 5,
+    display: 'inline-block',
+    height: 34,
+    border: `1px solid ${color.core.borderLight}`,
+    borderRadius: 3,
+
+    ':hover': {
+      border: `1px solid ${color.core.borderMedium}`,
+    },
+  },
+
+  CalendarMonth_month: {
+    paddingRight: 5,
+  },
+
+  CalendarMonth_yearNav_btnWrapper: {
+    display: 'inline-block',
+    height: '100%',
+    marginLeft: 3,
+    float: 'right',
+  },
+
+  CalendarMonth_yearNav: {
+    height: '50%',
+    display: 'block',
+    width: 17,
+    padding: 0,
+    fontSize: 12,
+    overflow: 'hidden',
+    backgroundColor: color.background,
+    color: color.placeholderText,
+    border: 'none',
+    cursor: 'pointer',
+
+    ':focus': {
+      backgroundColor: color.core.borderLight,
+    },
+
+    ':hover': {
+      backgroundColor: color.core.borderLight,
+    },
   },
 }))(CalendarMonth);
 
