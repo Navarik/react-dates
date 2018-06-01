@@ -358,7 +358,7 @@ export default withStyles(({ reactDates: { color, font, spacing } }) => ({
     },
 
     ':focus': {
-      backgroundColor: color.core.borderLight,
+      border: `1px solid ${color.core.borderLight}`,
       backgroundColor: color.core.borderLight,
     },
   },
