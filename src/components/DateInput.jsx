@@ -27,6 +27,7 @@ const propTypes = forbidExtraProps({
   name: PropTypes.string,
   placeholder: PropTypes.string, // also used as label
   displayValue: PropTypes.string,
+  dateString: PropTypes.string,
   screenReaderMessage: PropTypes.string,
   focused: PropTypes.bool,
   disabled: PropTypes.bool,
@@ -56,6 +57,7 @@ const defaultProps = {
   name: null,
   placeholder: 'Select Date',
   displayValue: '',
+  dateString: '',
   screenReaderMessage: '',
   focused: false,
   disabled: false,
@@ -101,7 +103,10 @@ class DateInput extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.state.dateString && nextProps.displayValue) {
+    if (
+      (this.state.dateString && nextProps.displayValue) // actual date set
+      || (this.state.dateString !== nextProps.dateString) // clearDate
+    ) {
       this.setState({
         dateString: '',
       });

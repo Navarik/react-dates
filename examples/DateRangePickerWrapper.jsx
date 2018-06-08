@@ -43,7 +43,7 @@ const defaultProps = {
   disabled: false,
   required: false,
   screenReaderInputMessage: '',
-  showClearDates: false,
+  showClearDates: true,
   showDefaultInputIcon: false,
   customInputIcon: null,
   customArrowIcon: null,

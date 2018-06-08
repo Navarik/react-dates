@@ -46,7 +46,9 @@ const propTypes = forbidExtraProps({
   onKeyDownQuestionMark: PropTypes.func,
 
   startDate: PropTypes.string,
+  startDateString: PropTypes.string,
   endDate: PropTypes.string,
+  endDateString: PropTypes.string,
 
   isStartDateFocused: PropTypes.bool,
   isEndDateFocused: PropTypes.bool,
@@ -95,7 +97,9 @@ const defaultProps = {
   onKeyDownQuestionMark() {},
 
   startDate: '',
+  startDateString: '',
   endDate: '',
+  endDateString: '',
 
   isStartDateFocused: false,
   isEndDateFocused: false,
@@ -127,6 +131,7 @@ const defaultProps = {
 
 function DateRangePickerInput({
   startDate,
+  startDateString,
   startDateId,
   startDateName,
   startDatePlaceholderText,
@@ -136,6 +141,7 @@ function DateRangePickerInput({
   onStartDateFocus,
   onStartDateShiftTab,
   endDate,
+  endDateString,
   endDateId,
   endDateName,
   endDatePlaceholderText,
@@ -216,6 +222,7 @@ function DateRangePickerInput({
         name={startDateName}
         placeholder={startDatePlaceholderText}
         displayValue={startDate}
+        dateString={startDateString}
         screenReaderMessage={screenReaderText}
         focused={isStartDateFocused}
         isFocused={isFocused}
@@ -250,6 +257,7 @@ function DateRangePickerInput({
         name={endDateName}
         placeholder={endDatePlaceholderText}
         displayValue={endDate}
+        dateString={endDateString}
         screenReaderMessage={screenReaderText}
         focused={isEndDateFocused}
         isFocused={isFocused}
@@ -277,7 +285,7 @@ function DateRangePickerInput({
             styles.DateRangePickerInput_clearDates,
             small && styles.DateRangePickerInput_clearDates__small,
             !customCloseIcon && styles.DateRangePickerInput_clearDates_default,
-            !(startDate || endDate) && styles.DateRangePickerInput_clearDates__hide,
+            !(startDate || endDate) && !(startDateString || endDateString) && styles.DateRangePickerInput_clearDates__hide,
           )}
           onClick={onClearDates}
           disabled={disabled}

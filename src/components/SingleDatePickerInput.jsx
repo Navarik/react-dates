@@ -21,6 +21,7 @@ const propTypes = forbidExtraProps({
   name: PropTypes.string,
   placeholder: PropTypes.string, // also used as label
   displayValue: PropTypes.string,
+  dateString: PropTypes.string,
   screenReaderMessage: PropTypes.string,
   focused: PropTypes.bool,
   isFocused: PropTypes.bool, // describes actual DOM focus
@@ -57,6 +58,7 @@ const defaultProps = {
   name: null,
   placeholder: 'Select Date',
   displayValue: '',
+  dateString: '',
   screenReaderMessage: '',
   focused: false,
   isFocused: false,
@@ -94,6 +96,7 @@ function SingleDatePickerInput({
   name,
   placeholder,
   displayValue,
+  dateString,
   focused,
   isFocused,
   disabled,
@@ -166,6 +169,7 @@ function SingleDatePickerInput({
         name={name}
         placeholder={placeholder} // also used as label
         displayValue={displayValue}
+        dateString={dateString}
         screenReaderMessage={screenReaderText}
         focused={focused}
         isFocused={isFocused}
@@ -192,7 +196,7 @@ function SingleDatePickerInput({
             styles.SingleDatePickerInput_clearDate,
             small && styles.SingleDatePickerInput_clearDate__small,
             !customCloseIcon && styles.SingleDatePickerInput_clearDate__default,
-            !displayValue && styles.SingleDatePickerInput_clearDate__hide,
+            !displayValue && !dateString && styles.SingleDatePickerInput_clearDate__hide,
           )}
           type="button"
           aria-label={phrases.clearDate}
