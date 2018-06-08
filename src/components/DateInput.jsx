@@ -237,7 +237,7 @@ class DateInput extends React.Component {
           readOnly={typeof readOnly === 'boolean' ? readOnly : isTouch}
           required={required}
           aria-describedby={screenReaderMessage && screenReaderMessageId}
-          dataInputIndex={inputIndex}
+          data-input-index={inputIndex}
         />
 
         {withFang && (
