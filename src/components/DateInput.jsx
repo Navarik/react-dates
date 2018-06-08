@@ -38,6 +38,7 @@ const propTypes = forbidExtraProps({
   small: PropTypes.bool,
   block: PropTypes.bool,
   regular: PropTypes.bool,
+  inputIndex: PropTypes.number,
 
   onChange: PropTypes.func,
   onFocus: PropTypes.func,
@@ -66,6 +67,7 @@ const defaultProps = {
   small: false,
   block: false,
   regular: false,
+  inputIndex: 0,
 
   onChange() {},
   onFocus() {},
@@ -186,6 +188,7 @@ class DateInput extends React.Component {
       verticalSpacing,
       small,
       regular,
+      inputIndex,
       block,
       styles,
       theme: { reactDates },
@@ -234,6 +237,7 @@ class DateInput extends React.Component {
           readOnly={typeof readOnly === 'boolean' ? readOnly : isTouch}
           required={required}
           aria-describedby={screenReaderMessage && screenReaderMessageId}
+          dataInputIndex={inputIndex}
         />
 
         {withFang && (

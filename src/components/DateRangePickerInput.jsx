@@ -232,6 +232,7 @@ function DateRangePickerInput({
         verticalSpacing={verticalSpacing}
         small={small}
         regular={regular}
+        inputIndex={0}
       />
 
       {
@@ -265,6 +266,7 @@ function DateRangePickerInput({
         verticalSpacing={verticalSpacing}
         small={small}
         regular={regular}
+        inputIndex={1}
       />
 
       {showClearDates && (
