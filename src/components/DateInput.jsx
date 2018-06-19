@@ -27,6 +27,7 @@ const propTypes = forbidExtraProps({
   name: PropTypes.string,
   placeholder: PropTypes.string, // also used as label
   displayValue: PropTypes.string,
+  dateString: PropTypes.string,
   screenReaderMessage: PropTypes.string,
   focused: PropTypes.bool,
   disabled: PropTypes.bool,
@@ -38,6 +39,7 @@ const propTypes = forbidExtraProps({
   small: PropTypes.bool,
   block: PropTypes.bool,
   regular: PropTypes.bool,
+  inputIndex: PropTypes.number,
 
   onChange: PropTypes.func,
   onFocus: PropTypes.func,
@@ -55,6 +57,7 @@ const defaultProps = {
   name: null,
   placeholder: 'Select Date',
   displayValue: '',
+  dateString: '',
   screenReaderMessage: '',
   focused: false,
   disabled: false,
@@ -66,6 +69,7 @@ const defaultProps = {
   small: false,
   block: false,
   regular: false,
+  inputIndex: 0,
 
   onChange() {},
   onFocus() {},
@@ -99,7 +103,10 @@ class DateInput extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.state.dateString && nextProps.displayValue) {
+    if (
+      (this.state.dateString && nextProps.displayValue) // actual date set
+      || (this.state.dateString !== nextProps.dateString) // clearDate
+    ) {
       this.setState({
         dateString: '',
       });
@@ -186,12 +193,13 @@ class DateInput extends React.Component {
       verticalSpacing,
       small,
       regular,
+      inputIndex,
       block,
       styles,
       theme: { reactDates },
     } = this.props;
 
-    const value = displayValue || dateString || '';
+    const value = dateString || displayValue || '';
     const screenReaderMessageId = `DateInput__screen-reader-message-${id}`;
 
     const withFang = showCaret && focused;
@@ -234,6 +242,7 @@ class DateInput extends React.Component {
           readOnly={typeof readOnly === 'boolean' ? readOnly : isTouch}
           required={required}
           aria-describedby={screenReaderMessage && screenReaderMessageId}
+          data-input-index={inputIndex}
         />
 
         {withFang && (

@@ -43,7 +43,7 @@ const defaultProps = {
   disabled: false,
   required: false,
   screenReaderInputMessage: '',
-  showClearDates: false,
+  showClearDates: true,
   showDefaultInputIcon: false,
   customInputIcon: null,
   customArrowIcon: null,
@@ -60,7 +60,7 @@ const defaultProps = {
   withPortal: false,
   withFullScreenPortal: false,
   initialVisibleMonth: null,
-  numberOfMonths: 2,
+  numberOfMonths: 3,
   keepOpenOnDateSelect: false,
   reopenPickerOnClearDates: false,
   isRTL: false,
@@ -70,6 +70,8 @@ const defaultProps = {
   navNext: null,
   onPrevMonthClick() {},
   onNextMonthClick() {},
+  onPrevYearClick() {},
+  onNextYearClick() {},
   onClose() {},
 
   // day presentation and interaction related props

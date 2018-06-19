@@ -97,7 +97,8 @@ const defaultProps = {
 
   onPrevMonthClick() {},
   onNextMonthClick() {},
-
+  onPrevYearClick() {},
+  onNextYearClick() {},
   onClose() {},
 
   // day presentation and interaction related props
@@ -351,6 +352,8 @@ class DateRangePicker extends React.Component {
       navNext,
       onPrevMonthClick,
       onNextMonthClick,
+      onPrevYearClick,
+      onNextYearClick,
       onDatesChange,
       onFocusChange,
       withPortal,
@@ -429,6 +432,8 @@ class DateRangePicker extends React.Component {
           numberOfMonths={numberOfMonths}
           onPrevMonthClick={onPrevMonthClick}
           onNextMonthClick={onNextMonthClick}
+          onPrevYearClick={onPrevYearClick}
+          onNextYearClick={onNextYearClick}
           onDatesChange={onDatesChange}
           onFocusChange={onFocusChange}
           onClose={onClose}

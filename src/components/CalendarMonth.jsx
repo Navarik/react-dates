@@ -28,6 +28,8 @@ import {
   VERTICAL_SCROLLABLE,
   DAY_SIZE,
 } from '../constants';
+import ChevronUp from './ChevronUp';
+import ChevronDown from './ChevronDown';
 
 const propTypes = forbidExtraProps({
   ...withStylesPropTypes,
@@ -46,6 +48,8 @@ const propTypes = forbidExtraProps({
   firstDayOfWeek: DayOfWeekShape,
   setMonthHeight: PropTypes.func,
   verticalBorderSpacing: nonNegativeInteger,
+  onPrevYearClick: PropTypes.func,
+  onNextYearClick: PropTypes.func,
 
   focusedDate: momentPropTypes.momentObj, // indicates focusable day
   isFocused: PropTypes.bool, // indicates whether or not to move focus to focusable day
@@ -54,6 +58,9 @@ const propTypes = forbidExtraProps({
   monthFormat: PropTypes.string,
   phrases: PropTypes.shape(getPhrasePropTypes(CalendarDayPhrases)),
   dayAriaLabelFormat: PropTypes.string,
+
+  showYearNav: PropTypes.bool,
+  monthIndex: PropTypes.number,
 });
 
 const defaultProps = {
@@ -80,6 +87,9 @@ const defaultProps = {
   phrases: CalendarDayPhrases,
   dayAriaLabelFormat: undefined,
   verticalBorderSpacing: undefined,
+
+  showYearNav: false,
+  monthIndex: undefined,
 };
 
 class CalendarMonth extends React.Component {
@@ -122,6 +132,12 @@ class CalendarMonth extends React.Component {
     return shallowCompare(this, nextProps, nextState);
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.monthIndex !== this.props.monthIndex) {
+      this.setMonthHeightTimeout = setTimeout(this.setMonthHeight, 0);
+    }
+  }
+
   componentWillUnmount() {
     if (this.setMonthHeightTimeout) {
       clearTimeout(this.setMonthHeightTimeout);
@@ -144,10 +160,44 @@ class CalendarMonth extends React.Component {
     this.gridRef = ref;
   }
 
+  maybeRenderYearNav() {
+    const {
+      month,
+      styles,
+      onPrevYearClick,
+      onNextYearClick,
+      showYearNav,
+    } = this.props;
+
+    // TODO: improve this to allow custom format?
+    const yearTitle = month.format('YYYY');
+
+    if (!showYearNav) {
+      return (
+        <strong>{yearTitle}</strong>
+      );
+    }
+
+    return (
+      <div {...css(styles.CalendarMonth_yearNav_wrapper)}>
+        <strong>{yearTitle}</strong>
+        <div {...css(styles.CalendarMonth_yearNav_btnWrapper)}>
+          <ChevronUp
+            onClick={onNextYearClick}
+            {...css(styles.CalendarMonth_yearNav)}
+          />
+          <ChevronDown
+            onClick={onPrevYearClick}
+            {...css(styles.CalendarMonth_yearNav)}
+          />
+        </div>
+      </div>
+    );
+  }
+
   render() {
     const {
       month,
-      monthFormat,
       orientation,
       isVisible,
       modifiers,
@@ -167,7 +217,8 @@ class CalendarMonth extends React.Component {
     } = this.props;
 
     const { weeks } = this.state;
-    const monthTitle = renderMonth ? renderMonth(month) : month.format(monthFormat);
+    // TODO: improve this to allow custom format?
+    const monthTitle = renderMonth ? renderMonth(month) : month.format('MMMM');
 
     const verticalScrollable = orientation === VERTICAL_SCROLLABLE;
 
@@ -188,7 +239,8 @@ class CalendarMonth extends React.Component {
             verticalScrollable && styles.CalendarMonth_caption__verticalScrollable,
           )}
         >
-          <strong>{monthTitle}</strong>
+          <strong {...css(styles.CalendarMonth_month)}>{monthTitle}</strong>
+          {this.maybeRenderYearNav()}
         </div>
 
         <table
@@ -251,14 +303,62 @@ export default withStyles(({ reactDates: { color, font, spacing } }) => ({
     color: color.text,
     fontSize: font.captionSize,
     textAlign: 'center',
-    paddingTop: spacing.captionPaddingTop,
+    paddingTop: 18,
     paddingBottom: spacing.captionPaddingBottom,
     captionSide: 'initial',
+    lineHeight: '34px',
   },
 
   CalendarMonth_caption__verticalScrollable: {
     paddingTop: 12,
     paddingBottom: 7,
+  },
+
+  CalendarMonth_yearNav_wrapper: {
+    paddingLeft: 5,
+    display: 'inline-block',
+    height: 34,
+    border: `1px solid ${color.core.borderLight}`,
+    borderRadius: 3,
+    fontSize: font.captionSize,
+    boxSizing: 'border-box',
+  },
+
+  CalendarMonth_month: {
+    paddingRight: 5,
+  },
+
+  CalendarMonth_yearNav_btnWrapper: {
+    display: 'inline-block',
+    height: '100%',
+    marginLeft: 3,
+    float: 'right',
+  },
+
+  CalendarMonth_yearNav: {
+    height: '50%',
+    display: 'block',
+    width: 17,
+    padding: 3,
+    fontSize: 12,
+    overflow: 'hidden',
+    backgroundColor: color.background,
+    color: color.placeholderText,
+    // border: 'none',
+    cursor: 'pointer',
+
+    border: `1px solid transparent`,
+    borderRadius: 3,
+
+    ':hover': {
+      border: `1px solid ${color.core.borderLight}`,
+      backgroundColor: color.core.borderLight,
+    },
+
+    ':focus': {
+      border: `1px solid ${color.core.borderLight}`,
+      backgroundColor: color.core.borderLight,
+    },
   },
 }))(CalendarMonth);
 

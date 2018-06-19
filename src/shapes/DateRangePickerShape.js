@@ -75,6 +75,8 @@ export default {
   navNext: PropTypes.node,
   onPrevMonthClick: PropTypes.func,
   onNextMonthClick: PropTypes.func,
+  onPrevYearClick: PropTypes.func,
+  onNextYearClick: PropTypes.func,
 
   // day presentation and interaction related props
   renderCalendarDay: PropTypes.func,
