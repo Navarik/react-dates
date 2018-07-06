@@ -634,7 +634,7 @@
   background: #fff;
   position: relative;
   display: inline-block;
-  width: 90px;
+  width: 36%;
   vertical-align: middle
 }
 .DateInput__small {
@@ -753,7 +753,7 @@
   line-height: normal;
   overflow: visible;
   cursor: pointer;
-  padding: 10px;
+  padding: 2px 6px 6px;
   margin: 0 10px 0 5px;
   position: absolute;
   right: 0;
@@ -775,8 +775,8 @@
 }
 .DateRangePickerInput_clearDates_svg {
   fill: #82888a;
-  height: 12px;
-  width: 15px;
+  height: 10px;
+  width: 13px;
   vertical-align: middle
 }
 .DateRangePickerInput_clearDates_svg__small {
@@ -803,7 +803,7 @@
 }
 .DateRangePicker {
   position: relative;
-  display: inline-block
+  display: block
 }
 .DateRangePicker__block {
   display: block

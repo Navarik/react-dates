@@ -352,7 +352,7 @@ export default withStyles(({ reactDates: { color, sizing } }) => ({
     overflow: 'visible',
 
     cursor: 'pointer',
-    padding: 10,
+    padding: '2px 6px 6px',
     margin: '0 10px 0 5px',
     position: 'absolute',
     right: 0,
@@ -382,8 +382,8 @@ export default withStyles(({ reactDates: { color, sizing } }) => ({
 
   DateRangePickerInput_clearDates_svg: {
     fill: color.core.grayLight,
-    height: 12,
-    width: 15,
+    height: 10,
+    width: 13,
     verticalAlign: 'middle',
   },
 

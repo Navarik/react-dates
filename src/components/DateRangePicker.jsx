@@ -598,7 +598,7 @@ export { DateRangePicker as PureDateRangePicker };
 export default withStyles(({ reactDates: { color, zIndex } }) => ({
   DateRangePicker: {
     position: 'relative',
-    display: 'inline-block',
+    display: 'block',
   },
 
   DateRangePicker__block: {

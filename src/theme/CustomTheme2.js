@@ -166,7 +166,7 @@ export default {
     },
 
     sizing: {
-      inputWidth: 90,
+      inputWidth: '36%',
       inputWidth_small: 70,
       arrowWidth: 16,
     },
