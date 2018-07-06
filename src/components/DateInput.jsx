@@ -312,7 +312,7 @@ export default withStyles(({
   },
 
   DateInput_input: {
-    fontWeight: 200,
+    fontWeight: 'inherit',
     fontSize: font.input.size,
     lineHeight: font.input.lineHeight,
     color: color.text,

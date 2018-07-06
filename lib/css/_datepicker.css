@@ -648,7 +648,7 @@
   color: #cecece
 }
 .DateInput_input {
-  font-weight: 200;
+  font-weight: inherit;
   font-size: .8rem;
   line-height: 19px;
   color: #484848;
@@ -792,7 +792,7 @@
   cursor: pointer;
   display: inline-block;
   vertical-align: middle;
-  padding: 10px;
+  padding: 6px;
   margin: 0 5px 0 10px
 }
 .DateRangePickerInput_calendarIcon_svg {
