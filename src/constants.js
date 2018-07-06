@@ -29,6 +29,6 @@ export const WEEKDAYS = [0, 1, 2, 3, 4, 5, 6];
 
 export const FANG_WIDTH_PX = 16;
 export const FANG_HEIGHT_PX = 8;
-export const DEFAULT_VERTICAL_SPACING = 12;
+export const DEFAULT_VERTICAL_SPACING = 18;
 
 export const MODIFIER_KEY_NAMES = new Set(['Shift', 'Control', 'Alt', 'Meta']);
