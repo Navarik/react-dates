@@ -744,7 +744,9 @@
 .DateRangePickerInput_arrow {
   display: inline-block;
   vertical-align: middle;
-  color: #484848
+  color: #484848;
+  width: 8%;
+  text-align: center
 }
 .DateRangePickerInput_arrow_svg {
   vertical-align: middle;

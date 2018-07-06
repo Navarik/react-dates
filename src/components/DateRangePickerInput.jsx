@@ -341,6 +341,8 @@ export default withStyles(({ reactDates: { color, sizing } }) => ({
     display: 'inline-block',
     verticalAlign: 'middle',
     color: color.text,
+    width: '8%',
+    textAlign: 'center',
   },
 
   DateRangePickerInput_arrow_svg: {
