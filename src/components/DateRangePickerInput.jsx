@@ -409,7 +409,7 @@ export default withStyles(({ reactDates: { color, sizing } }) => ({
     cursor: 'pointer',
     display: 'inline-block',
     verticalAlign: 'middle',
-    padding: 6,
+    padding: '4px 6px 8px',
     margin: '0 5px 0 10px',
   },
 

@@ -660,8 +660,7 @@
   border-right: 0;
   border-bottom: 2px solid transparent;
   border-left: 0;
-  border-radius: 0;
-  text-align: center
+  border-radius: 0
 }
 .DateInput_input__small {
   font-size: .6rem;
@@ -800,7 +799,7 @@
   cursor: pointer;
   display: inline-block;
   vertical-align: middle;
-  padding: 6px;
+  padding: 4px 6px 8px;
   margin: 0 5px 0 10px
 }
 .DateRangePickerInput_calendarIcon_svg {
