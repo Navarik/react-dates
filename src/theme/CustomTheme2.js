@@ -52,7 +52,7 @@ export default {
       background: core.white,
       backgroundDark: '#f2f2f2',
       backgroundFocused: core.white,
-      border: 'rgb(219, 219, 219)',
+      border: '#cecece',
       text: core.gray,
       textDisabled: core.border,
       textFocused: '#007a87',
