@@ -152,11 +152,11 @@ export default {
       captionPaddingBottom: 37,
       inputPadding: 0,
       displayTextPaddingVertical: undefined,
-      displayTextPaddingTop: 11,
-      displayTextPaddingBottom: 9,
+      displayTextPaddingTop: '0.3rem',
+      displayTextPaddingBottom: '0.3rem',
       displayTextPaddingHorizontal: undefined,
-      displayTextPaddingLeft: 11,
-      displayTextPaddingRight: 11,
+      displayTextPaddingLeft: '0.75rem',
+      displayTextPaddingRight: '0.75rem',
       displayTextPaddingVertical_small: undefined,
       displayTextPaddingTop_small: 7,
       displayTextPaddingBottom_small: 5,
@@ -173,7 +173,7 @@ export default {
 
     font: {
       size: '0.8rem',
-      captionSize: 18,
+      captionSize: 15,
       input: {
         size: '0.8rem',
         lineHeight: '19px',
