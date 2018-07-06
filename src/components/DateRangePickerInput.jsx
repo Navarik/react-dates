@@ -213,7 +213,7 @@ function DateRangePickerInput({
         !noBorder && styles.DateRangePickerInput__withBorder,
         block && styles.DateRangePickerInput__block,
         showClearDates && styles.DateRangePickerInput__showClearDates,
-        isFocused && styles.DateRangePickerInput__focused,
+        (isStartDateFocused || isEndDateFocused) && styles.DateRangePickerInput__focused,
       )}
     >
       {inputIconPosition === ICON_BEFORE_POSITION && inputIcon}
