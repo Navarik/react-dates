@@ -716,7 +716,7 @@
 }
 .DateRangePickerInput {
   background-color: #fff;
-  display: inline-block
+  display: block
 }
 .DateRangePickerInput__disabled {
   background: #f2f2f2

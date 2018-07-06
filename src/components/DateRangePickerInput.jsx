@@ -306,7 +306,7 @@ DateRangePickerInput.defaultProps = defaultProps;
 export default withStyles(({ reactDates: { color, sizing } }) => ({
   DateRangePickerInput: {
     backgroundColor: color.background,
-    display: 'inline-block',
+    display: 'block',
   },
 
   DateRangePickerInput__disabled: {
