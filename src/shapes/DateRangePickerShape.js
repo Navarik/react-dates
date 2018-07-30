@@ -28,8 +28,10 @@ export default {
   // input related props
   startDateId: PropTypes.string.isRequired,
   startDatePlaceholderText: PropTypes.string,
+  startDateTabIndex: PropTypes.number,
   endDateId: PropTypes.string.isRequired,
   endDatePlaceholderText: PropTypes.string,
+  endDateTabIndex: PropTypes.number,
   disabled: DisabledShape,
   required: PropTypes.bool,
   readOnly: PropTypes.bool,

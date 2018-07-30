@@ -26,6 +26,7 @@ const propTypes = forbidExtraProps({
   id: PropTypes.string.isRequired,
   name: PropTypes.string,
   placeholder: PropTypes.string, // also used as label
+  tabIndex: PropTypes.number,
   displayValue: PropTypes.string,
   dateString: PropTypes.string,
   screenReaderMessage: PropTypes.string,
@@ -56,6 +57,7 @@ const propTypes = forbidExtraProps({
 const defaultProps = {
   name: null,
   placeholder: 'Select Date',
+  tabIndex: null,
   displayValue: '',
   dateString: '',
   screenReaderMessage: '',
@@ -181,6 +183,7 @@ class DateInput extends React.Component {
       id,
       name,
       placeholder,
+      tabIndex,
       displayValue,
       screenReaderMessage,
       focused,
@@ -205,6 +208,8 @@ class DateInput extends React.Component {
     const withFang = showCaret && focused;
 
     const inputHeight = getInputHeight(reactDates, small);
+
+    const tabIndexProp = tabIndex ? { tabindex: tabIndex } : {};
 
     return (
       <div
@@ -237,6 +242,7 @@ class DateInput extends React.Component {
           onKeyDown={this.onKeyDown}
           onFocus={onFocus}
           placeholder={placeholder}
+          {...tabIndexProp}
           autoComplete="off"
           disabled={disabled}
           readOnly={typeof readOnly === 'boolean' ? readOnly : isTouch}

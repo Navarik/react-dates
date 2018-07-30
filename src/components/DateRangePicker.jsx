@@ -36,6 +36,7 @@ import {
   FANG_HEIGHT_PX,
   DEFAULT_VERTICAL_SPACING,
 } from '../constants';
+import PropTypes from "prop-types";
 
 const propTypes = forbidExtraProps({
   ...withStylesPropTypes,
@@ -50,7 +51,9 @@ const defaultProps = {
 
   // input related props
   startDatePlaceholderText: 'Start Date',
+  startDateTabIndex: null,
   endDatePlaceholderText: 'End Date',
+  endDateTabIndex: null,
   disabled: false,
   required: false,
   readOnly: false,
@@ -490,10 +493,12 @@ class DateRangePicker extends React.Component {
       startDateId,
       startDateName,
       startDatePlaceholderText,
+      startDateTabIndex,
       endDate,
       endDateId,
       endDateName,
       endDatePlaceholderText,
+      endDateTabIndex,
       focusedInput,
       screenReaderInputMessage,
       showClearDates,
@@ -545,11 +550,13 @@ class DateRangePicker extends React.Component {
             startDateId={startDateId}
             startDateName={startDateName}
             startDatePlaceholderText={startDatePlaceholderText}
+            startDateTabIndex={startDateTabIndex}
             isStartDateFocused={focusedInput === START_DATE}
             endDate={endDate}
             endDateId={endDateId}
             endDateName={endDateName}
             endDatePlaceholderText={endDatePlaceholderText}
+            endDateTabIndex={endDateTabIndex}
             isEndDateFocused={focusedInput === END_DATE}
             displayFormat={displayFormat}
             showClearDates={showClearDates}
